@@ -93,9 +93,9 @@ value = openstack_compute_instance_v2.ControllNode.access_ip_v4
 output "instance_ip_address2" {
 value = openstack_compute_instance_v2.Node1.access_ip_v4
 }
-output "instance_ip_address2" {
+output "instance_ip_address3" {
 value = openstack_compute_instance_v2.Node2.access_ip_v4
 }
-output "instance_ip_address2" {
+output "instance_ip_address4" {
 value = openstack_compute_instance_v2.Node3.access_ip_v4
 }
