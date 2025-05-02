@@ -14,9 +14,9 @@
     - name: Run terraform init
       shell: terraform init
       args:
-        chdir: /tmp/tf-project/terraform
+        chdir: /tmp/tf-project/Vms
 
     - name: Run terraform apply
       shell: terraform apply -auto-approve
       args:
-        chdir: /tmp/tf-project/terraform
+        chdir: /tmp/tf-project/Vms
