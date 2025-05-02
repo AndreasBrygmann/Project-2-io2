@@ -4,10 +4,10 @@
     - name: Initialize Terraform
       command: terraform init
       args:
-        chdir: /Vms/VMs.tf
+        chdir: Vms/VMs.tf
    
     - name: Apply Terraform configuration
       command: terraform apply -auto-approve
       args:
-        chdir: /Vms/VMs.tf
+        chdir: Vms/VMs.tf
       register: terraform
