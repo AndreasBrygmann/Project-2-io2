@@ -87,6 +87,7 @@ resource "openstack_compute_volume_attach_v2" "va_3" {
 }
 
 # Outputs ip adresses
+/*
 output "instance_ip_address" {
 value = openstack_compute_instance_v2.ControllNode.access_ip_v4
 }
@@ -99,3 +100,4 @@ value = openstack_compute_instance_v2.Node2.access_ip_v4
 output "instance_ip_address4" {
 value = openstack_compute_instance_v2.Node3.access_ip_v4
 }
+*/
