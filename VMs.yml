@@ -1,0 +1,3 @@
+---
+- name: Setup VMs
+  ansible.builtin.import_playbook: Vms/VMs.yml
