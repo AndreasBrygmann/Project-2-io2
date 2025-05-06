@@ -9,14 +9,15 @@
     rook_dir: "{{ rook_dir }}"
 
   tasks:
-    - name: Ensure git is installed
-      apt:
-        name: git
-        state: present
-        update_cache: yes
-      become: true
+    #- name: Ensure git is installed
+    #  apt:
+    #    name: git
+    #    state: present
+    #    update_cache: yes
+
 
     - name: Clone Rook repo (v1.17.1)
+      become: true
       git:
         repo: "{{ rook_repo }}"
         dest: "{{ rook_dir }}"
@@ -24,7 +25,6 @@
         single_branch: yes
 
     - name: Apply CRDs, common, and operator configs
-      become: True
       command: kubectl create -f {{ rook_dir }}/deploy/examples/crds.yaml -f {{ rook_dir }}/deploy/examples/common.yaml -f {{ rook_dir }}/deploy/examples/operator.yaml
       #args:
         #chdir: "{{ rook_dir }}/deploy/examples"
