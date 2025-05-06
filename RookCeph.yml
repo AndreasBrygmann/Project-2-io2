@@ -16,7 +16,6 @@
         #update_cache: yes
 
     - name: Check for kubectl installation
-      hosts: all
       tasks:
         - name: Check if kubectl is available
           command: which kubectl
