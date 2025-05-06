@@ -77,9 +77,13 @@
 
     - name: Create toolbox
       command: kubectl apply -f toolbox.yaml
-      command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
+
+    - name: Create toolbox
+      command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
+      args:
+        chdir: "{{ rook_dir }}"
 
     - name: Run toolbox
       command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
