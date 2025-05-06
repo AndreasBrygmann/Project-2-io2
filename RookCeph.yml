@@ -1,0 +1,44 @@
+---
+- name: Deploy Rook Ceph to Kubernetes
+  hosts: all
+  become: yes
+  vars:
+    rook_repo: "https://github.com/rook/rook.git"
+    rook_branch: "v1.17.1"
+    rook_dir: "/tmp/rook"
+
+  tasks:
+    - name: Ensure git is installed
+      package:
+        name: git
+        state: present
+
+    - name: Clone Rook repo (v1.17.1)
+      git:
+        repo: "{{ rook_repo }}"
+        dest: "{{ rook_dir }}"
+        version: "{{ rook_branch }}"
+        single_branch: yes
+
+    - name: Apply CRDs, common, and operator configs
+      command: >
+        kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      args:
+        chdir: "{{ rook_dir }}/deploy/examples"
+
+    - name: Create Ceph cluster
+      command: kubectl create -f cluster.yaml
+      args:
+        chdir: "{{ rook_dir }}/deploy/examples"
+
+    - name: Wait for pods in rook-ceph namespace to be ready
+      shell: |
+        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
+      register: pod_wait_result
+      failed_when: "'condition met' not in pod_wait_result.stdout"
+
+    - name: Re-apply cluster.yaml (if needed)
+      command: kubectl create -f cluster.yaml
+      args:
+        chdir: "{{ rook_dir }}/deploy/examples"
+      ignore_errors: true  # Prevent failure if already applied
