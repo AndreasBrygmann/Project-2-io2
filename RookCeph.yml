@@ -23,7 +23,7 @@
         msg: "{{ ansible_ssh_host }}"
 
     - name: Check if kubectl is available
-      become: true
+      #become: true
       command: which kubectl
       register: kubectl_check
       ignore_errors: true
