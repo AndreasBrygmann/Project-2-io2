@@ -3,12 +3,14 @@
   hosts: 10.196.241.162
   #connection: local
   gather_facts: false
+  become: true
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
     rook_dir: "{{ rook_dir }}"
 
   tasks:
+    
     #- name: Ensure git is installed
      # apt:
       #  name: git
@@ -43,7 +45,7 @@
 
 
     - name: Clone Rook repo (v1.17.1)
-      become: true
+
       git:
         repo: "{{ rook_repo }}"
         dest: "{{ rook_dir }}"
