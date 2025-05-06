@@ -1,6 +1,6 @@
 ---
 - name: Deploy Rook Ceph to Kubernetes
-  hosts: 10.196.241.162
+  hosts: node1
   #connection: local
   gather_facts: false
   become: true
