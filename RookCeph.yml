@@ -30,13 +30,13 @@
         chdir: "{{ rook_dir }}/deploy/examples"
 
     - name: Create Ceph cluster
-      command: {{ rook_dir }}/deploy/examples/kubectl create -f cluster.yaml
+      command: kubectl create -f cluster.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
     - name: Wait for pods in rook-ceph namespace to be ready
       shell: |
-        {{ rook_dir }}/deploy/examples/kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
+        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
 
