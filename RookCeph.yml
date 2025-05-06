@@ -3,7 +3,7 @@
   hosts: 10.196.241.162
   #connection: local
   gather_facts: false
-  become: true
+  
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
@@ -23,6 +23,7 @@
         msg: "{{ ansible_ssh_host }}"
 
     - name: Check if kubectl is available
+      become: true
       command: which kubectl
       register: kubectl_check
       ignore_errors: true
