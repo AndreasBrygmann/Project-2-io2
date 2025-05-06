@@ -1,6 +1,6 @@
 ---
 - name: Deploy Rook Ceph to Kubernetes
-  hosts: localhost
+  #hosts: localhost
   #connection: local
   gather_facts: false
   vars:
