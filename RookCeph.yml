@@ -14,28 +14,25 @@
       #  name: git
        # state: present
         #update_cache: yes
+    - name: Check if kubectl is available
+      command: which kubectl
+      register: kubectl_check
+      ignore_errors: true
 
-    - name: Check for kubectl installation
-      tasks:
-        - name: Check if kubectl is available
-          command: which kubectl
-          register: kubectl_check
-          ignore_errors: true
+    - name: Fail if kubectl is not installed
+      fail:
+        msg: "kubectl is not installed on this system."
+      when: kubectl_check.rc != 0
 
-        - name: Fail if kubectl is not installed
-          fail:
-            msg: "kubectl is not installed on this system."
-          when: kubectl_check.rc != 0
+    - name: Show kubectl version
+      command: kubectl version --client --short
+      register: kubectl_version
+      when: kubectl_check.rc == 0
 
-        - name: Show kubectl version
-          command: kubectl version --client --short
-          register: kubectl_version
-          when: kubectl_check.rc == 0
-
-        - name: Display kubectl version
-          debug:
-            msg: "{{ kubectl_version.stdout }}"
-          when: kubectl_check.rc == 0
+    - name: Display kubectl version
+      debug:
+        msg: "{{ kubectl_version.stdout }}"
+      when: kubectl_check.rc == 0
 
 
 
