@@ -14,10 +14,9 @@
       #  name: git
        # state: present
         #update_cache: yes
-        
+
     - name: Check for kubectl installation
       hosts: all
-      gather_facts: false
       tasks:
         - name: Check if kubectl is available
           command: which kubectl
