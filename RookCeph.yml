@@ -25,18 +25,18 @@
 
     - name: Apply CRDs, common, and operator configs
       command: >
-        kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+        {{ rook_dir }}/deploy/examples/kubectl create -f crds.yaml -f common.yaml -f operator.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
     - name: Create Ceph cluster
-      command: kubectl create -f cluster.yaml
+      command: {{ rook_dir }}/deploy/examples/kubectl create -f cluster.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
     - name: Wait for pods in rook-ceph namespace to be ready
       shell: |
-        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
+        {{ rook_dir }}/deploy/examples/kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
 
