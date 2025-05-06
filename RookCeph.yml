@@ -73,7 +73,6 @@
       command: kubectl -n rook-ceph get pod
       register: result
     - debug:
-        msg: The following pods are now active
         var: result.stdout_lines
 
     - name: Create toolbox
@@ -87,5 +86,4 @@
       command: ceph status
       register: result
     - debug:
-        msg: Ceph healt report
         var: result.stdout_lines
