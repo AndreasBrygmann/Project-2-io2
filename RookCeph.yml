@@ -68,9 +68,3 @@
         kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
-
-    - name: Re-apply cluster.yaml (ignore if already applied)
-      command: kubectl create -f cluster.yaml
-      args:
-        chdir: "{{ rook_dir }}/deploy/examples"
-      ignore_errors: true
