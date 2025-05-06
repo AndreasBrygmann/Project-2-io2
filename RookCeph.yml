@@ -10,10 +10,10 @@
 
   tasks:
     #- name: Ensure git is installed
-    #  apt:
-    #    name: git
-    #    state: present
-    #    update_cache: yes
+     # apt:
+      #  name: git
+       # state: present
+        #update_cache: yes
 
 
     - name: Clone Rook repo (v1.17.1)
@@ -25,9 +25,9 @@
         single_branch: yes
 
     - name: Apply CRDs, common, and operator configs
-      command: kubectl create -f "{{ rook_dir }}/deploy/examples/crds.yaml" -f "{{ rook_dir }}/deploy/examples/common.yaml" -f "{{ rook_dir }}/deploy/examples/operator.yaml"
-      #args:
-        #chdir: "{{ rook_dir }}/deploy/examples"
+      command: kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      args:
+        chdir: "{{ rook_dir }}/deploy/examples"
 
     - name: Create Ceph cluster
       command: kubectl create -f cluster.yaml
