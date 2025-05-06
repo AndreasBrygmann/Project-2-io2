@@ -25,7 +25,7 @@
 
     - name: Apply CRDs, common, and operator configs
       become: True
-      command: kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      command: Sudo kubectl create -f crds.yaml -f common.yaml -f operator.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
