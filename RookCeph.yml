@@ -82,9 +82,13 @@
     
     - name: Check health status
       command: kubectl -n rook-ceph logs -l job-name=rook-ceph-toolbox-job
+      async: 180
+      ignore_errors: true
       register: results
     - debug:
         var: result.stdout_lines
+
+
     #- name: Run toolbox
      # command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
       #args:
