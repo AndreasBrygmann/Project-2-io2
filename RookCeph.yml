@@ -3,7 +3,7 @@
   hosts: 10.196.241.162
   #connection: local
   gather_facts: false
-  
+  become: true
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
@@ -22,26 +22,26 @@
       debug:
         msg: "{{ ansible_ssh_host }}"
 
-    - name: Check if kubectl is available
-      #become: true
-      command: which kubectl
-      register: kubectl_check
-      ignore_errors: true
+    #- name: Check if kubectl is available
 
-    - name: Fail if kubectl is not installed
-      fail:
-        msg: "kubectl is not installed on this system."
-      when: kubectl_check.rc != 0
+      #command: which kubectl
+      #register: kubectl_check
+      #ignore_errors: true
 
-    - name: Show kubectl version
-      command: kubectl version --client --short
-      register: kubectl_version
-      when: kubectl_check.rc == 0
+    #- name: Fail if kubectl is not installed
+      #fail:
+       # msg: "kubectl is not installed on this system."
+      #when: kubectl_check.rc != 0
 
-    - name: Display kubectl version
-      debug:
-        msg: "{{ kubectl_version.stdout }}"
-      when: kubectl_check.rc == 0
+    #- name: Show kubectl version
+      #command: kubectl version --client --short
+      #register: kubectl_version
+      #when: kubectl_check.rc == 0
+
+    #- name: Display kubectl version
+      #debug:
+        #msg: "{{ kubectl_version.stdout }}"
+      #when: kubectl_check.rc == 0
 
 
 
