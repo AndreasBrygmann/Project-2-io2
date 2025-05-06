@@ -1,8 +1,8 @@
 ---
 - name: Deploy Rook Ceph to Kubernetes
-  #hosts: localhost
+  hosts: all
   #connection: local
-  gather_facts: false
+  gather_facts: true
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
