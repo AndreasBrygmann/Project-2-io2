@@ -1,17 +1,20 @@
 ---
 - name: Deploy Rook Ceph to Kubernetes
-  hosts: all
-  become: yes
+  hosts: localhost
+  connection: local
+  gather_facts: false
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
-    rook_dir: "/tmp/rook"
+    rook_dir: "/home/semaphore/rook"
 
   tasks:
     - name: Ensure git is installed
-      package:
+      apt:
         name: git
         state: present
+        update_cache: yes
+      become: true
 
     - name: Clone Rook repo (v1.17.1)
       git:
@@ -37,8 +40,8 @@
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
 
-    - name: Re-apply cluster.yaml (if needed)
+    - name: Re-apply cluster.yaml (ignore if already applied)
       command: kubectl create -f cluster.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
-      ignore_errors: true  # Prevent failure if already applied
+      ignore_errors: true
