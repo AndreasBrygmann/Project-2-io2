@@ -65,7 +65,7 @@
 
     - name: Wait for pods in rook-ceph namespace to be ready
       shell: |
-        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
+        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=0s
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
 
@@ -80,12 +80,12 @@
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
-    - name: Create toolbox
+    - name: Run toolbox
       command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
       args:
         chdir: "{{ rook_dir }}"
 
-    - name: Run toolbox
+    - name: Connect to toolbox
       command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
       command: ceph status
       register: result
