@@ -1,7 +1,7 @@
 ---
 - name: Deploy Rook Ceph to Kubernetes
   hosts: localhost
-  connection: local
+  #connection: local
   gather_facts: false
   vars:
     rook_repo: "https://github.com/rook/rook.git"
@@ -15,7 +15,10 @@
        # state: present
         #update_cache: yes
   
-    - debug: var=hostvars[Controll node]['ansible_default_ipv4']['address']
+    #- debug: var=hostvars[Controll node]['ansible_default_ipv4']['address']
+    - name: Show host's ip
+      debug:
+        msg: "{{ ansible_ssh_host }}"
 
     - name: Check if kubectl is available
       command: which kubectl
