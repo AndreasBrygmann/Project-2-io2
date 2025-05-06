@@ -15,8 +15,7 @@
        # state: present
         #update_cache: yes
   
-    - debug: var=ansible_all_ipv4_addresses
-    - debug: var=ansible_default_ipv4.address
+    - debug: var=hostvars[Controll node]['ansible_default_ipv4']['address']
 
     - name: Check if kubectl is available
       command: which kubectl
