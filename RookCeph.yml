@@ -76,27 +76,27 @@
         var: result.stdout_lines
 
     - name: Create toolbox
-      command: kubectl apply -f toolbox-job.yaml
+      command: kubectl apply -f toolbox.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
     
-    - name: Check health status
-      command: kubectl -n rook-ceph logs -l job-name=rook-ceph-toolbox-job
-      async: 180
-      ignore_errors: true
-      register: results
+    #- name: Check health status
+     # command: kubectl -n rook-ceph logs -l job-name=rook-ceph-toolbox-job
+      #register: logs
+      #async: 180
+      #ignore_errors: true
+    #- debug:
+        #var: logs.stdout_lines
+
+
+    - name: Run toolbox
+      command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
+      args:
+        chdir: "{{ rook_dir }}"
+
+    - name: Connect to toolbox
+      command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash -c "ceph status"
+      command: ceph status
+      register: result
     - debug:
         var: result.stdout_lines
-
-
-    #- name: Run toolbox
-     # command: kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
-      #args:
-       # chdir: "{{ rook_dir }}"
-
-    #- name: Connect to toolbox
-     # command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
-      #command: ceph status
-      #register: result
-    #- debug:
-        #var: result.stdout_lines
