@@ -54,7 +54,7 @@
         single_branch: yes
 
     - name: Apply CRDs, common, and operator configs
-      command: kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      command: kubectl apply -f crds.yaml -f common.yaml -f operator.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
