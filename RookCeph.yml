@@ -6,7 +6,7 @@
   vars:
     rook_repo: "https://github.com/rook/rook.git"
     rook_branch: "v1.17.1"
-    rook_dir: "/home/semaphore/rook"
+    rook_dir: "{{ rook_dir }}"
 
   tasks:
     - name: Ensure git is installed
@@ -25,7 +25,7 @@
 
     - name: Apply CRDs, common, and operator configs
       become: True
-      command: Sudo kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+      command: kubectl create -f crds.yaml -f common.yaml -f operator.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples"
 
