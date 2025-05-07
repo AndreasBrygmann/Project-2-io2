@@ -94,10 +94,10 @@
       args:
         chdir: "{{ rook_dir }}"
 
-    - name: Connect to toolbox
-      command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash -c "ceph status"
-      args:
-        chdir: "{{ rook_dir }}"
-      register: result
-    - debug:
-        var: result.stdout_lines
+    #- name: Connect to toolbox
+     # command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash -c "ceph status"
+      #args:
+       # chdir: "{{ rook_dir }}"
+      #register: result
+    #- debug:
+        #var: result.stdout_lines
