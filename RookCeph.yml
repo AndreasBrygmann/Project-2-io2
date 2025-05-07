@@ -65,15 +65,14 @@
 
     - name: Wait for pods in rook-ceph namespace to be ready
       shell: |
-        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=0s
+        kubectl -n rook-ceph wait --for=condition=Ready pod --all --timeout=180s
       register: pod_wait_result
       failed_when: "'condition met' not in pod_wait_result.stdout"
 
     - name: Check that the cluster is running
       command: kubectl -n rook-ceph get pod
       register: result
-    - debug:
-        var: result.stdout_lines
+
 
     - name: Create toolbox
       command: kubectl apply -f toolbox.yaml
@@ -94,6 +93,9 @@
       args:
         chdir: "{{ rook_dir }}"
 
+    - debug:
+        var: result.stdout_lines
+
     #- name: Connect to toolbox
      # command: kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash -c "ceph status"
       #args:
@@ -101,3 +103,21 @@
       #register: result
     #- debug:
         #var: result.stdout_lines
+
+    - name: Create Sephfs
+      command: kubectl apply -f filesystem.yaml
+    
+    - name: Create StorageClass
+      command: kubectl apply -f csi/cephfs/storageclass.yaml
+
+    - name: List available classes
+      command: kubectl get sc
+
+    - name: Create test PVC and Pod
+      command: kubectl create -f csi/cephfs/pvc.yaml
+    
+    - name: test usage of Persistent Volume
+      command: kubectl get pvc
+
+    - name: ???
+      command: kubectl apply -f csi/cephfs/pod.yaml
