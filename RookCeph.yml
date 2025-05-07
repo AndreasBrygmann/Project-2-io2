@@ -103,21 +103,3 @@
       #register: result
     #- debug:
         #var: result.stdout_lines
-
-    - name: Create Sephfs
-      command: kubectl apply -f filesystem.yaml
-    
-    - name: Create StorageClass
-      command: kubectl apply -f csi/cephfs/storageclass.yaml
-
-    - name: List available classes
-      command: kubectl get sc
-
-    - name: Create test PVC and Pod
-      command: kubectl create -f csi/cephfs/pvc.yaml
-    
-    - name: test usage of Persistent Volume
-      command: kubectl get pvc
-
-    - name: ???
-      command: kubectl apply -f csi/cephfs/pod.yaml
