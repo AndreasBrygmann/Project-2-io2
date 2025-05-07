@@ -1,3 +1,11 @@
+- name: Deploy Cephsfs
+  hosts: node1
+  #connection: local
+  gather_facts: false
+  become: true
+
+  tasks:
+    
     - name: Create Cephfs
       command: kubectl apply -f filesystem.yaml
     
