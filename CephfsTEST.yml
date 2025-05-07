@@ -21,6 +21,9 @@
 
     - name: List available classes
       command: kubectl get sc
+      register: results
+    - debug:
+        var: result.stdout_lines
 
     - name: Create test PVC and Pod
       command: kubectl create -f pvc.yaml
@@ -29,6 +32,9 @@
     
     - name: test usage of Persistent Volume
       command: kubectl get pvc
+      register: results
+    - debug:
+        var: result.stdout_lines
 
     - name: Create demo pod
       command: kubectl apply -f pod.yaml
