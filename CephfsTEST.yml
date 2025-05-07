@@ -21,7 +21,7 @@
 
     - name: List available classes
       command: kubectl get sc
-      register: results
+      register: result
     - debug:
         var: result.stdout_lines
 
@@ -34,7 +34,7 @@
       command: kubectl get pvc
       register: results
     - debug:
-        var: result.stdout_lines
+        var: results.stdout_lines
 
     - name: Create demo pod
       command: kubectl apply -f pod.yaml
