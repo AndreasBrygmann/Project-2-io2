@@ -26,7 +26,7 @@
         var: result.stdout_lines
 
     - name: Create test PVC and Pod
-      command: kubectl create -f pvc.yaml
+      command: kubectl apply -f pvc.yaml
       args:
         chdir: "{{ rook_dir }}/deploy/examples/csi/cephfs"
     
