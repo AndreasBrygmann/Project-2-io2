@@ -8,12 +8,16 @@
     - name: Destroy virtual machines
       #command: terraform destroy
 
-      openstack.cloud.server:
-        name: vm-0
-        state: absent
-      openstack.cloud.server:
-        name: vm-1
-        state: absent
-      openstack.cloud.server:
-        name: vm-2
-        state: absent
+      #openstack.cloud.server:
+        #name: vm-0
+        #state: absent
+      #openstack.cloud.server:
+        #name: vm-1
+        #state: absent
+      #openstack.cloud.server:
+        #name: vm-2
+        #state: absent
+
+      shell: openstack server delete vm-0
+      shell: openstack server delete vm-1
+      shell: openstack server delete vm-2
