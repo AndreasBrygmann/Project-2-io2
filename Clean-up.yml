@@ -9,16 +9,19 @@
       shell: |
         OS_CLIENT_CONFIG_FILE=/home/semaphore/.config/openstack/clouds.yaml \
         openstack --os-cloud openstack server delete vm-0
+      ignore_errors: True
 
     - name: Delete VM named 'vm-1'
       shell: |
         OS_CLIENT_CONFIG_FILE=/home/semaphore/.config/openstack/clouds.yaml \
         openstack --os-cloud openstack server delete vm-1
+      ignore_errors: True
 
     - name: Delete VM named 'vm-2'
       shell: |
         OS_CLIENT_CONFIG_FILE=/home/semaphore/.config/openstack/clouds.yaml \
         openstack --os-cloud openstack server delete vm-2
+      ignore_errors: True
     
     #- name: Destroy virtual machines
       #command: terraform destroy
