@@ -1,0 +1,9 @@
+- name: Clean up deployment
+  hosts: node1
+  #connection: local
+  gather_facts: false
+  become: true
+
+  tasks:
+    name: Destroy virtual machines
+    command: terraform destroy
