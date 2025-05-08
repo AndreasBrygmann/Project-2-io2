@@ -1,0 +1,62 @@
+---
+- name: Install Kasten K10 on Kubernetes
+  hosts: node1   
+  become: yes
+  collections:
+    - community.kubernetes 
+
+  vars:
+    # Helm repo info
+    kasten_repo_name: kasten
+    kasten_repo_url: https://charts.kasten.io/
+
+
+    kasten_release_name: k10
+    kasten_namespace: kasten-io
+
+    kasten_chart: kasten/k10
+
+  tasks:
+    - name: Add Kasten Helm repository
+      community.kubernetes.helm_repository:
+        name: "{{ kasten_repo_name }}"
+        repo_url: "{{ kasten_repo_url }}"
+      register: repo_added
+
+    - name: Update all Helm repositories
+      command: helm repo update
+      when: repo_added.changed or repo_added is not defined
+
+    - name: Install or upgrade Kasten K10 via Helm
+      community.kubernetes.helm:
+        name: "{{ kasten_release_name }}"
+        chart_ref: "{{ kasten_chart }}"
+        namespace: "{{ kasten_namespace }}"
+        create_namespace: true
+        version: "{{ kasten_chart_version }}"
+        values:
+          # ingress:
+          #   enabled: true
+        state: present
+
+    - name: Wait for Kasten K10 deployment to be ready
+      community.kubernetes.k8s_info:
+        kind: Deployment
+        namespace: "{{ kasten_namespace }}"
+        api_version: apps/v1
+        label_selectors:
+          - "app.kubernetes.io/name=k10"   # Kasten K10 basic label
+      register: k10_deploy
+      until: k10_deploy.resources | length > 0 and
+             k10_deploy.resources[0].status.availableReplicas is defined and
+             k10_deploy.resources[0].status.availableReplicas > 0
+      retries: 10
+      delay: 15
+
+    - name: Display Kasten K10 access info
+      debug:
+        msg: |
+          Kasten K10 has been installed in namespace '{{ kasten_namespace }}'.
+          To access the dashboard, forward the service port:
+            kubectl -n {{ kasten_namespace }} port-forward svc/gateway 8080:8080
+          and browse http://localhost:8080
