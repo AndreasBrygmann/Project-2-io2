@@ -5,5 +5,5 @@
   become: true
 
   tasks:
-    name: Destroy virtual machines
-    command: terraform destroy
+    - name: Destroy virtual machines
+      command: terraform destroy
