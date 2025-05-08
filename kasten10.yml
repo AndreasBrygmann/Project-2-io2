@@ -2,6 +2,8 @@
 - name: Install Kasten K10 on Kubernetes
   hosts: node1   
   become: yes
+  collections:
+    - community.kubernetes 
 
   vars:
     # Helm repo info
