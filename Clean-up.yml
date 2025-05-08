@@ -1,5 +1,5 @@
 - name: Clean up deployment
-  hosts: node1
+  hosts: localhost
   #connection: local
   gather_facts: false
   become: true
