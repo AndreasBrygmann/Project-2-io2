@@ -6,4 +6,14 @@
 
   tasks:
     - name: Destroy virtual machines
-      command: terraform destroy
+      #command: terraform destroy
+
+      openstack.cloud.server:
+        name: vm-0
+        state: absent
+      openstack.cloud.server:
+        name: vm-1
+        state: absent
+      openstack.cloud.server:
+        name: vm-2
+        state: absent
