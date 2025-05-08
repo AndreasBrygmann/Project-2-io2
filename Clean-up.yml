@@ -5,7 +5,12 @@
   become: true
 
   tasks:
-    - name: Destroy virtual machines
+    - name: Delete VM named 'vm-0'
+      shell: |
+        OS_CLIENT_CONFIG_FILE=/home/semaphore/.config/openstack/clouds.yaml \
+        openstack --os-cloud openstack server delete vm-0
+    
+    #- name: Destroy virtual machines
       #command: terraform destroy
 
       #openstack.cloud.server:
@@ -18,6 +23,6 @@
         #name: vm-2
         #state: absent
 
-      shell: openstack server delete vm-0
-      shell: openstack server delete vm-1
-      shell: openstack server delete vm-2
+      #shell: openstack server delete vm-0
+      #shell: openstack server delete vm-1
+      #shell: openstack server delete vm-2
